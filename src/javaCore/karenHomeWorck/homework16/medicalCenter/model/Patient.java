@@ -1,14 +1,16 @@
 package javaCore.karenHomeWorck.homework16.medicalCenter.model;
 
-import javax.xml.crypto.Data;
+import javaCore.karenHomeWorck.homework16.medicalCenter.util.DateUtil;
+
+import java.util.Date;
 
 public class Patient extends Person {
 
     private Doctor doctor;
-    private Data registerDateTime;
+    private Date registerDateTime;
 
 
-    public Patient(String id, String name, String surname, String phoneNumber, Doctor doctor, Data registerDateTime) {
+    public Patient(String id, String name, String surname, String phoneNumber, Doctor doctor, Date registerDateTime) {
         super(id, name, surname, phoneNumber);
         this.doctor = doctor;
         this.registerDateTime = registerDateTime;
@@ -25,11 +27,11 @@ public class Patient extends Person {
         this.doctor = doctor;
     }
 
-    public Data getRegisterDateTime() {
+    public Date getRegisterDateTime() {
         return registerDateTime;
     }
 
-    public void setRegisterDateTime(Data registerDateTime) {
+    public void setRegisterDateTime(Date registerDateTime) {
         this.registerDateTime = registerDateTime;
     }
 
@@ -37,6 +39,7 @@ public class Patient extends Person {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         Patient patient = (Patient) o;
 
@@ -46,7 +49,8 @@ public class Patient extends Person {
 
     @Override
     public int hashCode() {
-        int result = getDoctor() != null ? getDoctor().hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (getDoctor() != null ? getDoctor().hashCode() : 0);
         result = 31 * result + (getRegisterDateTime() != null ? getRegisterDateTime().hashCode() : 0);
         return result;
     }
@@ -55,7 +59,7 @@ public class Patient extends Person {
     public String toString() {
         return "Patient{" +
                 "doctor=" + doctor +
-                ", registerDateTime=" + registerDateTime +
-                '}';
+                ", registerDateTime=" + DateUtil.dateTimeToString(registerDateTime) +
+                "} " + super.toString();
     }
 }

@@ -53,6 +53,6 @@ public class Doctor extends Person {
         return "Doctor{" +
                 "email='" + email + '\'' +
                 ", profession='" + profession + '\'' +
-                '}';
+                "} " + super.toString();
     }
 }

@@ -1,19 +1,17 @@
 package javaCore.karenHomeWorck.homework16.medicalCenter.model;
 
-import javaCore.karenHomeWorck.homework16.medicalCenter.storage.PersonStorage;
-
-public class Person extends PersonStorage {
+public abstract class Person {
 
     private String id;
     private String name;
     private String surname;
-    private String phoneNumber;
+    private String phone;
 
     public Person(String id, String name, String surname, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.surname = surname;
-        this.phoneNumber = phoneNumber;
+        this.phone = phoneNumber;
     }
 
     public Person() {
@@ -43,12 +41,12 @@ public class Person extends PersonStorage {
         this.surname = surname;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override
@@ -62,7 +60,7 @@ public class Person extends PersonStorage {
         if (getName() != null ? !getName().equals(person.getName()) : person.getName() != null) return false;
         if (getSurname() != null ? !getSurname().equals(person.getSurname()) : person.getSurname() != null)
             return false;
-        return getPhoneNumber() != null ? getPhoneNumber().equals(person.getPhoneNumber()) : person.getPhoneNumber() == null;
+        return getPhone() != null ? getPhone().equals(person.getPhone()) : person.getPhone() == null;
     }
 
     @Override
@@ -70,7 +68,7 @@ public class Person extends PersonStorage {
         int result = getId() != null ? getId().hashCode() : 0;
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
         result = 31 * result + (getSurname() != null ? getSurname().hashCode() : 0);
-        result = 31 * result + (getPhoneNumber() != null ? getPhoneNumber().hashCode() : 0);
+        result = 31 * result + (getPhone() != null ? getPhone().hashCode() : 0);
         return result;
     }
 
@@ -80,7 +78,7 @@ public class Person extends PersonStorage {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
+                ", phoneNumber='" + phone + '\'' +
                 '}';
     }
 }

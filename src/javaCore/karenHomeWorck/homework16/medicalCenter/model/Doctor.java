@@ -3,9 +3,9 @@ package javaCore.karenHomeWorck.homework16.medicalCenter.model;
 public class Doctor extends Person {
 
     private String email;
-    private String profession;
+    private Profession profession;
 
-    public Doctor(String id, String name, String surname, String phoneNumber, String email, String profession) {
+    public Doctor(String id, String name, String surname, String phoneNumber, String email, Profession profession) {
         super(id, name, surname, phoneNumber);
         this.email = email;
         this.profession = profession;
@@ -22,11 +22,11 @@ public class Doctor extends Person {
         this.email = email;
     }
 
-    public String getProfession() {
+    public Profession getProfession() {
         return profession;
     }
 
-    public void setProfession(String profession) {
+    public void setProfession(Profession profession) {
         this.profession = profession;
     }
 
@@ -34,25 +34,24 @@ public class Doctor extends Person {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         Doctor doctor = (Doctor) o;
 
         if (getEmail() != null ? !getEmail().equals(doctor.getEmail()) : doctor.getEmail() != null) return false;
-        return getProfession() != null ? getProfession().equals(doctor.getProfession()) : doctor.getProfession() == null;
+        return getProfession() == doctor.getProfession();
     }
 
     @Override
     public int hashCode() {
-        int result = getEmail() != null ? getEmail().hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
         result = 31 * result + (getProfession() != null ? getProfession().hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Doctor{" +
-                "email='" + email + '\'' +
-                ", profession='" + profession + '\'' +
-                "} " + super.toString();
+        return "Doctor{" + "email='" + email + '\'' + ", profession=" + profession + "} " + super.toString();
     }
 }

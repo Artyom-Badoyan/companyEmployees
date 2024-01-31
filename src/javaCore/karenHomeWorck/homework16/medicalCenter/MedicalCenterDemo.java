@@ -2,6 +2,7 @@ package javaCore.karenHomeWorck.homework16.medicalCenter;
 
 import javaCore.karenHomeWorck.homework16.medicalCenter.model.Doctor;
 import javaCore.karenHomeWorck.homework16.medicalCenter.model.Patient;
+import javaCore.karenHomeWorck.homework16.medicalCenter.model.Profession;
 import javaCore.karenHomeWorck.homework16.medicalCenter.storage.PersonStorage;
 import javaCore.karenHomeWorck.homework16.medicalCenter.util.DateUtil;
 
@@ -91,6 +92,8 @@ public class MedicalCenterDemo implements Commands {
                 }
             } catch (ParseException e) {
                 System.out.println("Incorrect registerDate Time. Please try again!");
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Please try again. Please input patient data!");
             }
         }
     }
@@ -102,14 +105,21 @@ public class MedicalCenterDemo implements Commands {
         Doctor doctorById = personStorage.getDoctorById(doctorId);
         if (doctorById != null) {
             System.out.println("Please input Doctor name,surname,phoneNumber,email,profession");
-            String doctorDataStr = scanner.nextLine();
-            String[] doctorData = doctorDataStr.split(",");
-            doctorById.setName(doctorData[0]);
-            doctorById.setSurname(doctorData[1]);
-            doctorById.setPhone(doctorData[2]);
-            doctorById.setEmail(doctorData[3]);
-            doctorById.setProfession(doctorData[4]);
-            System.out.println("doctor was updated!");
+            printDoctorProfession();
+            try {
+                String doctorDataStr = scanner.nextLine();
+                String[] doctorData = doctorDataStr.split(",");
+                doctorById.setName(doctorData[0]);
+                doctorById.setSurname(doctorData[1]);
+                doctorById.setPhone(doctorData[2]);
+                doctorById.setEmail(doctorData[3]);
+                doctorById.setProfession(Profession.valueOf(doctorData[4]));
+                System.out.println("doctor was updated!");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Please choose correct doctor profession!");
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Please try again. Please input doctor data!");
+            }
         } else {
             System.out.println("Doctor whit " + doctorId + " does not exists!");
         }
@@ -130,27 +140,46 @@ public class MedicalCenterDemo implements Commands {
     private static void searchDoctorByProfession() {
         System.out.println("Please input profession");
         String profession = scanner.nextLine();
-        personStorage.searchDoctorByProfession(profession);
+        try {
+            Profession doctorProfession = Profession.valueOf(profession);
+            personStorage.searchDoctorByProfession(doctorProfession);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Please choose doctor profession!");
+        }
     }
 
     private static void addDoctor() {
         System.out.println("Please input Doctor id,name,surname,phoneNumber,email,profession");
+        printDoctorProfession();
         String doctorDataStr = scanner.nextLine();
         String[] doctorData = doctorDataStr.split(",");
         String doctorId = doctorData[0];
         Doctor doctorById = personStorage.getDoctorById(doctorId);
         if (doctorById == null) {
             Doctor doctor = new Doctor();
-            doctor.setId(doctorId);
-            doctor.setName(doctorData[1]);
-            doctor.setSurname(doctorData[2]);
-            doctor.setPhone(doctorData[3]);
-            doctor.setEmail(doctorData[4]);
-            doctor.setProfession(doctorData[5]);
-            personStorage.add(doctor);
-            System.out.println("doctor added!");
+            try {
+                doctor.setId(doctorId);
+                doctor.setName(doctorData[1]);
+                doctor.setSurname(doctorData[2]);
+                doctor.setPhone(doctorData[3]);
+                doctor.setEmail(doctorData[4]);
+                doctor.setProfession(Profession.valueOf(doctorData[5]));
+                personStorage.add(doctor);
+                System.out.println("doctor added!");
+            } catch (IllegalArgumentException e) {
+                System.out.println("Please choose correct doctor profession!");
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("Please try again. Please input doctor data!");
+            }
         } else {
             System.out.println("Doctor whit " + doctorId + " already exists!");
+        }
+    }
+
+    private static void printDoctorProfession() {
+        Profession[] values = Profession.values();
+        for (Profession value : values) {
+            System.out.println(value);
         }
     }
 }

@@ -3,8 +3,10 @@ package javaCore.karenHomeWorck.homework16.medicalCenter.storage;
 import javaCore.karenHomeWorck.homework16.medicalCenter.model.Doctor;
 import javaCore.karenHomeWorck.homework16.medicalCenter.model.Patient;
 import javaCore.karenHomeWorck.homework16.medicalCenter.model.Person;
+import javaCore.karenHomeWorck.homework16.medicalCenter.model.Profession;
 import javaCore.karenHomeWorck.homework16.medicalCenter.util.DateUtil;
 
+import javax.print.Doc;
 import java.util.Date;
 
 public class PersonStorage {
@@ -28,13 +30,12 @@ public class PersonStorage {
         }
     }
 
-
-    public void searchDoctorByProfession(String profession) {
+    public void searchDoctorByProfession(Profession doctorProfession) {
         for (int i = 0; i < size; i++) {
             Person person = persons[i];
             if (person instanceof Doctor) {
                 Doctor doctor = (Doctor) person;
-                if (doctor.getProfession().equals(profession)) {
+                if (doctor.getProfession() == doctorProfession) {
                     System.out.println(doctor);
                 }
             }
